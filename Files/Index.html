@@ -1,1 +1,1064 @@
 
+<!DOCTYPE html>
+<html lang="en" class="dark h-full bg-zinc-950 text-zinc-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Talking Tom Audio Studio</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        zinc: {
+                            850: '#141417',
+                            900: '#18181b',
+                            950: '#09090b',
+                        }
+                    },
+                    boxShadow: {
+                        'shadcn': '0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3)',
+                        'apple-thumb': '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Touch prevent selection for gesture controls */
+        .touch-no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* Micro subtle grid background */
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Apple Slide Text Shimmer Animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .slide-text-shimmer {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.2) 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2.5s infinite linear;
+        }
+
+        /* Listening Ripple Effect */
+        @keyframes listenPulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .animate-listen-wave {
+            animation: listenPulse 1.4s infinite ease-in-out;
+            transform-origin: center;
+        }
+
+        /* Shadcn UI Range Slider Custom Styling */
+        input[type="range"].shadcn-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Slider Track */
+        input[type="range"].shadcn-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #27272a;
+            border-radius: 9999px;
+            transition: background 0.2s ease;
+        }
+        input[type="range"].shadcn-slider::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            background: #27272a;
+            border-radius: 9999px;
+            transition: background 0.2s ease;
+        }
+
+        /* Slider Thumb */
+        input[type="range"].shadcn-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #f4f4f5;
+            border: 2px solid #09090b;
+            margin-top: -6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        input[type="range"].shadcn-slider::-moz-range-thumb {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #f4f4f5;
+            border: 2px solid #09090b;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input[type="range"].shadcn-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 4px rgba(244, 244, 245, 0.15);
+        }
+        input[type="range"].shadcn-slider::-moz-range-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 4px rgba(244, 244, 245, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+<body class="h-full bg-zinc-950 text-zinc-100 font-sans antialiased flex flex-col justify-center items-center relative bg-grid-pattern overflow-x-hidden p-4 sm:p-6">
+
+    <!-- Permission Onboarding Modal -->
+    <div id="permissionModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-md transition-opacity duration-300">
+        <div class="max-w-sm w-full bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-2xl flex flex-col space-y-5 text-center items-center">
+            
+            <div class="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-100 shadow-sm">
+                <!-- Mic Icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            
+            <div class="space-y-1">
+                <h2 class="text-base font-semibold tracking-tight text-zinc-100">Microphone Access</h2>
+                <p class="text-xs text-zinc-400">
+                    Grant audio access to enable voice recording and pitch transformation.
+                </p>
+            </div>
+
+            <button id="grantPermissionBtn" class="w-full py-2.5 px-4 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-xs transition-colors shadow-sm flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.99]">
+                <!-- ShieldCheck Icon -->
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Authorize Microphone</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Minimal Container -->
+    <main class="max-w-2xl w-full flex flex-col space-y-5 my-auto">
+        
+        <!-- Recording, Character Avatar & Visualizer Card -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-shadcn flex flex-col space-y-4">
+            
+            <!-- Character Avatar Stage -->
+            <div class="flex flex-col items-center justify-center py-1">
+                <div class="relative w-28 h-28 flex items-center justify-center">
+                    
+                    <!-- Listening Animated Outer Rings -->
+                    <div id="listeningWaves" class="absolute inset-0 rounded-full border border-red-500/30 animate-listen-wave hidden pointer-events-none"></div>
+                    <div id="listeningWavesOuter" class="absolute -inset-2 rounded-full border border-red-500/20 animate-listen-wave hidden pointer-events-none" style="animation-delay: 0.3s"></div>
+
+                    <!-- Character SVG -->
+                    <svg id="characterSvg" class="w-24 h-24 relative z-10 transition-transform duration-300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Head Base -->
+                        <rect x="15" y="15" width="70" height="70" rx="28" fill="#18181b" stroke="#3f3f46" stroke-width="3"/>
+                        
+                        <!-- Cat/Tom Ear Left -->
+                        <path d="M 22 20 L 12 4 L 32 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5" stroke-linejoin="round"/>
+                        <!-- Cat/Tom Ear Right -->
+                        <path d="M 78 20 L 88 4 L 68 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5" stroke-linejoin="round"/>
+
+                        <!-- Listening Audio Waves Left (Active on Listen) -->
+                        <g id="earWavesLeft" class="opacity-0 transition-opacity duration-200">
+                            <path d="M 5 35 A 15 15 0 0 0 5 65" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M 1 28 A 22 22 0 0 0 1 72" stroke="#ef4444" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                        </g>
+
+                        <!-- Listening Audio Waves Right (Active on Listen) -->
+                        <g id="earWavesRight" class="opacity-0 transition-opacity duration-200">
+                            <path d="M 95 35 A 15 15 0 0 1 95 65" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M 99 28 A 22 22 0 0 1 99 72" stroke="#ef4444" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                        </g>
+
+                        <!-- Eye Left Outer -->
+                        <circle cx="36" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+                        <!-- Eye Left Pupil -->
+                        <ellipse id="pupilLeft" cx="36" cy="42" rx="4" ry="4" fill="#f4f4f5" class="transition-all duration-200"/>
+
+                        <!-- Eye Right Outer -->
+                        <circle cx="64" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+                        <!-- Eye Right Pupil -->
+                        <ellipse id="pupilRight" cx="64" cy="42" rx="4" ry="4" fill="#f4f4f5" class="transition-all duration-200"/>
+
+                        <!-- Snout/Nose -->
+                        <polygon points="50,51 46,47 54,47" fill="#a1a1aa"/>
+
+                        <!-- Mouth Path (Animated during speaking) -->
+                        <path id="avatarMouth" d="M 40 62 Q 50 64 60 62 Q 50 64 40 62" fill="#ef4444" stroke="#f4f4f5" stroke-width="2" stroke-linejoin="round"/>
+
+                        <!-- Cheek Blush Circles -->
+                        <circle cx="26" cy="54" r="3.5" fill="#52525b" opacity="0.4"/>
+                        <circle cx="74" cy="54" r="3.5" fill="#52525b" opacity="0.4"/>
+                    </svg>
+
+                </div>
+
+                <div id="characterStateLabel" class="mt-1 text-[11px] font-mono text-zinc-500 transition-colors">
+                    Idle
+                </div>
+            </div>
+
+            <!-- Canvas Visualizer Viewport -->
+            <div class="relative w-full h-28 bg-zinc-950 rounded-lg border border-zinc-800/80 overflow-hidden flex items-center justify-center">
+                <canvas id="visualizerCanvas" class="w-full h-full block cursor-pointer"></canvas>
+
+                <!-- Timer & Mode Overlay -->
+                <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-xs pointer-events-none">
+                    <div id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                    <div class="flex items-center space-x-2 pointer-events-auto">
+                        <button id="toggleVisModeBtn" class="bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 text-[11px] px-2 py-0.5 rounded font-mono transition-colors">
+                            Bars
+                        </button>
+                        <div id="timerDisplay" class="font-mono text-[11px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded">
+                            00:00.0
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idle State Hint -->
+                <div id="visualizerHint" class="absolute pointer-events-none flex flex-col items-center justify-center text-zinc-500 space-y-1.5">
+                    <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+                        <!-- Mic Icon -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <p class="text-[11px] font-medium text-zinc-400">Slide to record audio</p>
+                </div>
+            </div>
+
+            <!-- Apple-Style Slide-to-Lock Gesture Controls -->
+            <div class="relative flex flex-col items-center justify-center py-2 min-h-[64px] w-full touch-no-select">
+                
+                <!-- Slide Track -->
+                <div id="appleSlideTrack" class="relative w-full max-w-sm h-14 bg-zinc-950 border border-zinc-800 rounded-full p-1.5 flex items-center shadow-inner overflow-hidden select-none">
+                    
+                    <!-- Track Progress Fill -->
+                    <div id="appleTrackProgress" class="absolute left-0 top-0 bottom-0 bg-zinc-800/60 rounded-full w-0 transition-none pointer-events-none"></div>
+
+                    <!-- Slide Shimmer Text -->
+                    <div id="appleSlideText" class="absolute inset-0 flex items-center justify-center text-xs tracking-wider uppercase pointer-events-none pl-6 flex space-x-1">
+                        <span class="slide-text-shimmer font-medium">slide to lock recording</span>
+                        <!-- ChevronRight Icon -->
+                        <svg class="w-3.5 h-3.5 text-zinc-400 inline-block align-middle ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+
+                    <!-- Slide Thumb -->
+                    <div id="appleSliderThumb" class="relative z-10 w-11 h-11 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 flex items-center justify-center shadow-apple-thumb cursor-grab active:cursor-grabbing transform translate-x-0 transition-none border border-white/40">
+                        <!-- Mic Icon -->
+                        <svg id="thumbMicIcon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                </div>
+
+                <!-- Locked Hands-free Recording Actions -->
+                <div id="lockedControls" class="hidden absolute w-full max-w-sm flex items-center space-x-3 z-30">
+                    <button id="cancelRecordBtn" class="flex-1 bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-red-400 font-medium py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer">
+                        <!-- Trash2 Icon -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
+                        </svg>
+                        <span>Trash</span>
+                    </button>
+                    <button id="stopLockedRecordBtn" class="flex-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer shadow-md">
+                        <!-- Square Icon -->
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <rect x="6" y="6" width="12" height="12" rx="2"/>
+                        </svg>
+                        <span>Stop & Mimic</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Voice Control Engine -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-shadcn flex flex-col space-y-5">
+            
+            <!-- Voice Presets -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                
+                <button data-preset="tom" class="preset-btn p-2 rounded-lg border border-zinc-100 bg-zinc-100 text-zinc-950 font-medium text-xs flex flex-col items-center space-y-1 transition-all text-center cursor-pointer">
+                    <!-- Zap Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    <span>Tom</span>
+                </button>
+
+                <button data-preset="deep" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                    <!-- Volume2 Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <span>Deep</span>
+                </button>
+
+                <button data-preset="robot" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                    <!-- Cpu Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <rect x="9" y="9" width="6" height="6"/>
+                        <line x1="9" y1="1" x2="9" y2="4"/>
+                        <line x1="15" y1="1" x2="15" y2="4"/>
+                        <line x1="9" y1="20" x2="9" y2="23"/>
+                        <line x1="15" y1="20" x2="15" y2="23"/>
+                    </svg>
+                    <span>Robot</span>
+                </button>
+
+                <button data-preset="helium" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                    <!-- Wind Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+                        <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+                        <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                    </svg>
+                    <span>Helium</span>
+                </button>
+
+                <button data-preset="echo" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                    <!-- Radio Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="2"/>
+                        <path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49"/>
+                    </svg>
+                    <span>Echo</span>
+                </button>
+
+                <button data-preset="natural" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                    <!-- Mic Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    </svg>
+                    <span>Natural</span>
+                </button>
+            </div>
+
+            <!-- Range Selectors -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-1">
+                
+                <!-- Pitch -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <label for="pitchRange" class="font-medium text-zinc-300">Pitch Shift</label>
+                        <span id="pitchValue" class="text-zinc-500 font-mono text-[11px]">+8.0 st</span>
+                    </div>
+                    <input id="pitchRange" type="range" min="-12" max="12" step="0.5" value="8" class="shadcn-slider">
+                </div>
+
+                <!-- Speed -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <label for="speedRange" class="font-medium text-zinc-300">Speed</label>
+                        <span id="speedValue" class="text-zinc-500 font-mono text-[11px]">1.15x</span>
+                    </div>
+                    <input id="speedRange" type="range" min="0.5" max="2.0" step="0.05" value="1.15" class="shadcn-slider">
+                </div>
+
+                <!-- Echo -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <label for="echoRange" class="font-medium text-zinc-300">Echo Delay</label>
+                        <span id="echoValue" class="text-zinc-500 font-mono text-[11px]">0%</span>
+                    </div>
+                    <input id="echoRange" type="range" min="0" max="80" step="5" value="0" class="shadcn-slider">
+                </div>
+            </div>
+
+            <!-- Replay Action Button -->
+            <div class="flex items-center justify-between pt-3 border-t border-zinc-800">
+                <button id="replayBtn" disabled class="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-zinc-200 transition-colors flex items-center space-x-2 cursor-pointer">
+                    <!-- RotateCw Icon -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    <span>Replay Last Clip</span>
+                </button>
+                <span id="replayNotice" class="text-[11px] text-zinc-500 font-mono">No clip stored.</span>
+            </div>
+
+        </div>
+
+        <!-- Recording Archive -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 shadow-shadcn space-y-3">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Recording History</h3>
+                <span id="historyCount" class="text-[11px] text-zinc-500 font-mono">0 clips</span>
+            </div>
+
+            <div id="historyList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+                <div class="text-center py-4 text-zinc-500 text-xs">
+                    Clips recorded will appear here.
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Core Web Audio State
+        let audioCtx = null;
+        let mediaStream = null;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let lastAudioBuffer = null;
+        let activeSourceNode = null;
+        let analyserNode = null;
+        let animationFrameId = null;
+
+        // Gesture state
+        let isRecording = false;
+        let isLocked = false;
+        let isDraggingThumb = false;
+        let startX = 0;
+        let currentThumbX = 0;
+        let maxTrackDistance = 0;
+        let timerInterval = null;
+        let startTime = 0;
+        let shouldCancelRecording = false;
+        let recordingHistory = [];
+
+        // Audio parameters
+        let currentPitchShift = 8.0;
+        let currentSpeed = 1.15;
+        let currentEchoFeedback = 0;
+        let isRobotEffect = false;
+        let visualizerMode = 'bars';
+
+        // DOM Elements
+        const permissionModal = document.getElementById('permissionModal');
+        const grantPermissionBtn = document.getElementById('grantPermissionBtn');
+
+        const appleSlideTrack = document.getElementById('appleSlideTrack');
+        const appleSliderThumb = document.getElementById('appleSliderThumb');
+        const appleTrackProgress = document.getElementById('appleTrackProgress');
+        const appleSlideText = document.getElementById('appleSlideText');
+        const lockedControls = document.getElementById('lockedControls');
+        const cancelRecordBtn = document.getElementById('cancelRecordBtn');
+        const stopLockedRecordBtn = document.getElementById('stopLockedRecordBtn');
+
+        const statusDot = document.getElementById('statusDot');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const visualizerHint = document.getElementById('visualizerHint');
+        const toggleVisModeBtn = document.getElementById('toggleVisModeBtn');
+
+        const pitchRange = document.getElementById('pitchRange');
+        const pitchValue = document.getElementById('pitchValue');
+        const speedRange = document.getElementById('speedRange');
+        const speedValue = document.getElementById('speedValue');
+        const echoRange = document.getElementById('echoRange');
+        const echoValue = document.getElementById('echoValue');
+
+        const presetButtons = document.querySelectorAll('.preset-btn');
+        const replayBtn = document.getElementById('replayBtn');
+        const replayNotice = document.getElementById('replayNotice');
+        const historyList = document.getElementById('historyList');
+        const historyCount = document.getElementById('historyCount');
+
+        const canvas = document.getElementById('visualizerCanvas');
+        const canvasCtx = canvas.getContext('2d');
+
+        // Character Avatar DOM References
+        const characterSvg = document.getElementById('characterSvg');
+        const characterStateLabel = document.getElementById('characterStateLabel');
+        const earWavesLeft = document.getElementById('earWavesLeft');
+        const earWavesRight = document.getElementById('earWavesRight');
+        const listeningWaves = document.getElementById('listeningWaves');
+        const listeningWavesOuter = document.getElementById('listeningWavesOuter');
+        const pupilLeft = document.getElementById('pupilLeft');
+        const pupilRight = document.getElementById('pupilRight');
+        const avatarMouth = document.getElementById('avatarMouth');
+
+        function setupCanvasResolution() {
+            if (!canvas.parentElement) return;
+            canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+            canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+            canvasCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+        window.addEventListener('resize', setupCanvasResolution);
+        setupCanvasResolution();
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Microphone Authorization
+        grantPermissionBtn.addEventListener('click', async () => {
+            initAudioContext();
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                permissionModal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => permissionModal.remove(), 300);
+            } catch (err) {
+                alert("Microphone authorization failed.");
+            }
+        });
+
+        function calculateMaxTrackDistance() {
+            const trackWidth = appleSlideTrack.clientWidth;
+            const thumbWidth = appleSliderThumb.clientWidth;
+            maxTrackDistance = trackWidth - thumbWidth - 12;
+        }
+        window.addEventListener('resize', calculateMaxTrackDistance);
+        calculateMaxTrackDistance();
+
+        function getClientX(e) {
+            return e.touches ? e.touches[0].clientX : e.clientX;
+        }
+
+        function handleThumbDown(e) {
+            if (isLocked) return;
+            initAudioContext();
+            calculateMaxTrackDistance();
+
+            isDraggingThumb = true;
+            startX = getClientX(e) - currentThumbX;
+            appleSliderThumb.style.transition = 'none';
+            appleTrackProgress.style.transition = 'none';
+
+            if (!isRecording) {
+                startRecordingSequence();
+            }
+        }
+
+        function handleThumbMove(e) {
+            if (!isDraggingThumb || isLocked) return;
+
+            const x = getClientX(e) - startX;
+            currentThumbX = Math.max(0, Math.min(x, maxTrackDistance));
+
+            appleSliderThumb.style.transform = `translateX(${currentThumbX}px)`;
+            appleTrackProgress.style.width = `${currentThumbX + 22}px`;
+
+            const opacity = 1 - (currentThumbX / maxTrackDistance);
+            appleSlideText.style.opacity = opacity.toString();
+
+            if (currentThumbX >= maxTrackDistance * 0.72) {
+                lockRecordingState();
+            }
+        }
+
+        function handleThumbUp() {
+            if (!isDraggingThumb) return;
+            isDraggingThumb = false;
+
+            if (isLocked) return;
+
+            appleSliderThumb.style.transition = 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            appleTrackProgress.style.transition = 'width 0.25s ease';
+            appleSlideText.style.transition = 'opacity 0.25s ease';
+
+            currentThumbX = 0;
+            appleSliderThumb.style.transform = 'translateX(0px)';
+            appleTrackProgress.style.width = '0px';
+            appleSlideText.style.opacity = '1';
+
+            stopRecordingSequence(false);
+        }
+
+        appleSliderThumb.addEventListener('mousedown', handleThumbDown);
+        window.addEventListener('mousemove', handleThumbMove);
+        window.addEventListener('mouseup', handleThumbUp);
+
+        appleSliderThumb.addEventListener('touchstart', handleThumbDown, { passive: false });
+        window.addEventListener('touchmove', handleThumbMove, { passive: false });
+        window.addEventListener('touchend', handleThumbUp, { passive: false });
+
+        async function startRecordingSequence() {
+            if (!mediaStream) {
+                try {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                } catch (e) {
+                    alert("Microphone permission required.");
+                    return;
+                }
+            }
+
+            if (activeSourceNode) {
+                try { activeSourceNode.stop(); } catch(e){}
+            }
+
+            audioChunks = [];
+            mediaRecorder = new MediaRecorder(mediaStream);
+
+            mediaRecorder.ondataavailable = (e) => {
+                if (e.data.size > 0) audioChunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = async () => {
+                if (shouldCancelRecording) {
+                    shouldCancelRecording = false;
+                    setStatusState('ready');
+                    return;
+                }
+
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const arrayBuffer = await audioBlob.arrayBuffer();
+
+                try {
+                    lastAudioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                    const duration = lastAudioBuffer.duration.toFixed(1);
+                    
+                    replayNotice.innerText = `${duration}s clip ready`;
+                    replayBtn.disabled = false;
+
+                    addToHistory(audioBlob, duration);
+                    playTransformedAudio();
+                } catch (err) {
+                    console.error("Audio Decoding Error:", err);
+                    setStatusState('ready');
+                }
+            };
+
+            mediaRecorder.start();
+            isRecording = true;
+            isLocked = false;
+            shouldCancelRecording = false;
+            startTimer();
+
+            setStatusState('recording');
+            visualizerHint.style.display = 'none';
+
+            setupLiveVisualizer(mediaStream);
+        }
+
+        function lockRecordingState() {
+            isLocked = true;
+            isDraggingThumb = false;
+
+            appleSlideTrack.classList.add('hidden');
+            lockedControls.classList.remove('hidden');
+
+            setStatusState('recording');
+        }
+
+        function stopRecordingSequence(cancel = false) {
+            if (!isRecording) return;
+
+            isRecording = false;
+            shouldCancelRecording = cancel;
+            stopTimer();
+
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+
+            isLocked = false;
+            appleSlideTrack.classList.remove('hidden');
+            lockedControls.classList.add('hidden');
+
+            currentThumbX = 0;
+            appleSliderThumb.style.transform = 'translateX(0px)';
+            appleTrackProgress.style.width = '0px';
+            appleSlideText.style.opacity = '1';
+        }
+
+        stopLockedRecordBtn.addEventListener('click', () => stopRecordingSequence(false));
+        cancelRecordBtn.addEventListener('click', () => stopRecordingSequence(true));
+
+        function playTransformedAudio() {
+            if (!lastAudioBuffer) return;
+            initAudioContext();
+
+            if (activeSourceNode) {
+                try { activeSourceNode.stop(); } catch(e){}
+            }
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = lastAudioBuffer;
+
+            const pitchFactor = Math.pow(2, currentPitchShift / 12);
+            source.playbackRate.value = pitchFactor * currentSpeed;
+
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = 256;
+
+            let currentNode = source;
+
+            if (isRobotEffect) {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.value = 55;
+
+                const modGain = audioCtx.createGain();
+                modGain.gain.value = 0.8;
+
+                osc.connect(modGain);
+                currentNode.connect(gain);
+                modGain.connect(gain.gain);
+
+                osc.start();
+                currentNode = gain;
+            }
+
+            if (currentEchoFeedback > 0) {
+                const delay = audioCtx.createDelay();
+                delay.delayTime.value = 0.22;
+
+                const feedback = audioCtx.createGain();
+                feedback.gain.value = currentEchoFeedback / 100;
+
+                currentNode.connect(delay);
+                delay.connect(feedback);
+                feedback.connect(delay);
+                delay.connect(analyserNode);
+            }
+
+            currentNode.connect(analyserNode);
+            analyserNode.connect(audioCtx.destination);
+
+            activeSourceNode = source;
+            source.start(0);
+
+            setStatusState('playing');
+            drawCanvasVisualizer();
+
+            source.onended = () => {
+                setStatusState('ready');
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            };
+        }
+
+        replayBtn.addEventListener('click', playTransformedAudio);
+
+        function setupLiveVisualizer(stream) {
+            const liveSource = audioCtx.createMediaStreamSource(stream);
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = 256;
+            liveSource.connect(analyserNode);
+            drawCanvasVisualizer();
+        }
+
+        toggleVisModeBtn.addEventListener('click', () => {
+            visualizerMode = visualizerMode === 'bars' ? 'wave' : 'bars';
+            toggleVisModeBtn.innerText = visualizerMode === 'bars' ? 'Bars' : 'Wave';
+        });
+
+        function drawCanvasVisualizer() {
+            if (!analyserNode) return;
+
+            const bufferLength = analyserNode.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            const width = canvas.parentElement.clientWidth;
+            const height = canvas.parentElement.clientHeight;
+
+            function render() {
+                animationFrameId = requestAnimationFrame(render);
+                canvasCtx.clearRect(0, 0, width, height);
+
+                // Calculate average volume amplitude for character lip-sync
+                analyserNode.getByteFrequencyData(dataArray);
+                let sum = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    sum += dataArray[i];
+                }
+                const averageVolume = sum / bufferLength;
+
+                // Animate character mouth if playing back audio (speaking state)
+                if (statusDot.className.includes('indigo')) {
+                    animateCharacterMouth(averageVolume);
+                }
+
+                if (visualizerMode === 'bars') {
+                    const barWidth = (width / bufferLength) * 2.2;
+                    let x = 0;
+
+                    for (let i = 0; i < bufferLength; i++) {
+                        const barHeight = (dataArray[i] / 255) * height * 0.85;
+                        canvasCtx.fillStyle = '#f4f4f5';
+                        canvasCtx.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+                        x += barWidth;
+                    }
+                } else {
+                    analyserNode.getByteTimeDomainData(dataArray);
+                    canvasCtx.lineWidth = 2;
+                    canvasCtx.strokeStyle = '#f4f4f5';
+                    canvasCtx.beginPath();
+
+                    const sliceWidth = width / bufferLength;
+                    let x = 0;
+
+                    for (let i = 0; i < bufferLength; i++) {
+                        const v = dataArray[i] / 128.0;
+                        const y = (v * height) / 2;
+
+                        if (i === 0) canvasCtx.moveTo(x, y);
+                        else canvasCtx.lineTo(x, y);
+
+                        x += sliceWidth;
+                    }
+
+                    canvasCtx.lineTo(width, height / 2);
+                    canvasCtx.stroke();
+                }
+            }
+
+            render();
+        }
+
+        // Dynamic Avatar Animation Functions
+        function animateCharacterMouth(volume) {
+            // Volume typically ranges from 0 to 255
+            const maxMouthOpening = 22;
+            const opening = Math.min(maxMouthOpening, Math.max(2, (volume / 255) * maxMouthOpening * 2.5));
+            
+            // Morph SVG Mouth path
+            const mouthD = `M 38 60 Q 50 ${60 + opening} 62 60 Q 50 ${60 + (opening * 0.3)} 38 60`;
+            avatarMouth.setAttribute('d', mouthD);
+        }
+
+        function resetCharacterMouth() {
+            avatarMouth.setAttribute('d', 'M 40 62 Q 50 64 60 62 Q 50 64 40 62');
+        }
+
+        // Voice Presets Config
+        const presets = {
+            tom: { pitch: 8.0, speed: 1.15, echo: 0, robot: false },
+            deep: { pitch: -7.0, speed: 0.9, echo: 0, robot: false },
+            robot: { pitch: -2.0, speed: 1.0, echo: 10, robot: true },
+            helium: { pitch: 11.0, speed: 1.35, echo: 0, robot: false },
+            echo: { pitch: 2.0, speed: 1.0, echo: 45, robot: false },
+            natural: { pitch: 0.0, speed: 1.0, echo: 0, robot: false }
+        };
+
+        presetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.getAttribute('data-preset');
+                const cfg = presets[key];
+                if (!cfg) return;
+
+                presetButtons.forEach(b => {
+                    b.classList.remove('border-zinc-100', 'bg-zinc-100', 'text-zinc-950');
+                    b.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+                });
+
+                btn.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+                btn.classList.add('border-zinc-100', 'bg-zinc-100', 'text-zinc-950');
+
+                currentPitchShift = cfg.pitch;
+                currentSpeed = cfg.speed;
+                currentEchoFeedback = cfg.echo;
+                isRobotEffect = cfg.robot;
+
+                pitchRange.value = cfg.pitch;
+                speedRange.value = cfg.speed;
+                echoRange.value = cfg.echo;
+
+                updateSliderLabels();
+            });
+        });
+
+        pitchRange.addEventListener('input', (e) => {
+            currentPitchShift = parseFloat(e.target.value);
+            isRobotEffect = false;
+            updateSliderLabels();
+            resetPresetButtons();
+        });
+
+        speedRange.addEventListener('input', (e) => {
+            currentSpeed = parseFloat(e.target.value);
+            updateSliderLabels();
+            resetPresetButtons();
+        });
+
+        echoRange.addEventListener('input', (e) => {
+            currentEchoFeedback = parseInt(e.target.value);
+            updateSliderLabels();
+            resetPresetButtons();
+        });
+
+        function updateSliderLabels() {
+            pitchValue.innerText = `${currentPitchShift >= 0 ? '+' : ''}${currentPitchShift.toFixed(1)} st`;
+            speedValue.innerText = `${currentSpeed.toFixed(2)}x`;
+            echoValue.innerText = `${currentEchoFeedback}%`;
+        }
+
+        function resetPresetButtons() {
+            presetButtons.forEach(b => {
+                b.classList.remove('border-zinc-100', 'bg-zinc-100', 'text-zinc-950');
+                b.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+            });
+        }
+
+        function addToHistory(blob, duration) {
+            const url = URL.createObjectURL(blob);
+            const clip = { id: Date.now(), url, duration, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+            recordingHistory.unshift(clip);
+            renderHistoryList();
+        }
+
+        function renderHistoryList() {
+            historyCount.innerText = `${recordingHistory.length} clip${recordingHistory.length !== 1 ? 's' : ''}`;
+            if (recordingHistory.length === 0) return;
+
+            historyList.innerHTML = recordingHistory.map((clip, index) => `
+                <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 flex items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="font-mono text-zinc-500 text-[10px]">#${recordingHistory.length - index}</span>
+                        <span class="font-medium text-zinc-300">Clip (${clip.duration}s)</span>
+                        <span class="text-[10px] text-zinc-500 font-mono">${clip.time}</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5">
+                        <button onclick="playHistoryClip('${clip.url}')" class="px-2 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-[11px] transition-colors cursor-pointer flex items-center space-x-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>Play</span>
+                        </button>
+                        <a href="${clip.url}" download="talking-tom-clip-${clip.id}.webm" class="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 transition-colors" title="Download">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function playHistoryClip(url) {
+            initAudioContext();
+            const resp = await fetch(url);
+            const arrayBuffer = await resp.arrayBuffer();
+            lastAudioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            playTransformedAudio();
+        }
+
+        function setStatusState(state) {
+            if (state === 'recording') {
+                statusDot.className = 'w-2 h-2 rounded-full bg-red-400 animate-ping';
+                characterStateLabel.innerText = 'Listening...';
+                characterStateLabel.className = 'mt-1 text-[11px] font-mono text-red-400 font-semibold';
+
+                // Listening Avatar Effects
+                earWavesLeft.classList.remove('opacity-0');
+                earWavesRight.classList.remove('opacity-0');
+                listeningWaves.classList.remove('hidden');
+                listeningWavesOuter.classList.remove('hidden');
+
+                // Widen Pupils
+                pupilLeft.setAttribute('rx', '6');
+                pupilLeft.setAttribute('ry', '6');
+                pupilRight.setAttribute('rx', '6');
+                pupilRight.setAttribute('ry', '6');
+                resetCharacterMouth();
+
+            } else if (state === 'playing') {
+                statusDot.className = 'w-2 h-2 rounded-full bg-indigo-400 animate-pulse';
+                characterStateLabel.innerText = 'Mimicking Speech...';
+                characterStateLabel.className = 'mt-1 text-[11px] font-mono text-indigo-400 font-semibold';
+
+                // Disable listening indicators
+                earWavesLeft.classList.add('opacity-0');
+                earWavesRight.classList.add('opacity-0');
+                listeningWaves.classList.add('hidden');
+                listeningWavesOuter.classList.add('hidden');
+
+                pupilLeft.setAttribute('rx', '4.5');
+                pupilLeft.setAttribute('ry', '4.5');
+                pupilRight.setAttribute('rx', '4.5');
+                pupilRight.setAttribute('ry', '4.5');
+
+            } else {
+                statusDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+                characterStateLabel.innerText = 'Idle';
+                characterStateLabel.className = 'mt-1 text-[11px] font-mono text-zinc-500';
+
+                // Reset Avatar state
+                earWavesLeft.classList.add('opacity-0');
+                earWavesRight.classList.add('opacity-0');
+                listeningWaves.classList.add('hidden');
+                listeningWavesOuter.classList.add('hidden');
+
+                pupilLeft.setAttribute('rx', '4');
+                pupilLeft.setAttribute('ry', '4');
+                pupilRight.setAttribute('rx', '4');
+                pupilRight.setAttribute('ry', '4');
+                resetCharacterMouth();
+            }
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const diff = Date.now() - startTime;
+                const secs = (diff / 1000).toFixed(1);
+                timerDisplay.innerText = `00:${secs.padStart(4, '0')}`;
+            }, 100);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+    </script>
+</body>
+</html>
