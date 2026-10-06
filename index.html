@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="dark h-full bg-zinc-950 text-zinc-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,7 +12,9 @@
     <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -30,8 +33,9 @@
                         }
                     },
                     boxShadow: {
-                        'shadcn': '0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3)',
-                        'apple-thumb': '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15)'
+                        'shadcn': '0 4px 24px -2px rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.3)',
+                        'apple-thumb': '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15)',
+                        'sheet': '0 -10px 30px -5px rgba(0, 0, 0, 0.8)'
                     }
                 }
             }
@@ -50,16 +54,22 @@
         /* Micro subtle grid background */
         .bg-grid-pattern {
             background-size: 32px 32px;
-            background-image: 
+            background-image:
                 linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
         /* Apple Slide Text Shimmer Animation */
         @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
+
         .slide-text-shimmer {
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.2) 100%);
             background-size: 200% 100%;
@@ -70,10 +80,22 @@
 
         /* Listening Ripple Effect */
         @keyframes listenPulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.15); opacity: 0.3; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.15);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
         }
+
         .animate-listen-wave {
             animation: listenPulse 1.4s infinite ease-in-out;
             transform-origin: center;
@@ -98,6 +120,7 @@
             border-radius: 9999px;
             transition: background 0.2s ease;
         }
+
         input[type="range"].shadcn-slider::-moz-range-track {
             width: 100%;
             height: 6px;
@@ -118,6 +141,7 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
+
         input[type="range"].shadcn-slider::-moz-range-thumb {
             height: 18px;
             width: 18px;
@@ -132,6 +156,7 @@
             transform: scale(1.15);
             box-shadow: 0 0 0 4px rgba(244, 244, 245, 0.15);
         }
+
         input[type="range"].shadcn-slider::-moz-range-thumb:hover {
             transform: scale(1.15);
             box-shadow: 0 0 0 4px rgba(244, 244, 245, 0.15);
@@ -142,33 +167,42 @@
             width: 5px;
             height: 5px;
         }
+
         ::-webkit-scrollbar-track {
             background: #09090b;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #27272a;
             border-radius: 9999px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #3f3f46;
         }
     </style>
 </head>
-<body class="h-full bg-zinc-950 text-zinc-100 font-sans antialiased flex flex-col justify-center items-center relative bg-grid-pattern overflow-x-hidden p-4 sm:p-6">
+
+<body
+    class="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased flex items-center justify-center relative bg-grid-pattern overflow-x-hidden p-3 sm:p-6 lg:p-8">
 
     <!-- Permission Onboarding Modal -->
-    <div id="permissionModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-md transition-opacity duration-300">
-        <div class="max-w-sm w-full bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-2xl flex flex-col space-y-5 text-center items-center">
-            
-            <div class="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-100 shadow-sm">
+    <div id="permissionModal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-md transition-opacity duration-300">
+        <div
+            class="max-w-sm w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl flex flex-col space-y-5 text-center items-center">
+
+            <div
+                class="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-100 shadow-sm">
                 <!-- Mic Icon -->
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                    <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
-            
+
             <div class="space-y-1">
                 <h2 class="text-base font-semibold tracking-tight text-zinc-100">Microphone Access</h2>
                 <p class="text-xs text-zinc-400">
@@ -176,71 +210,138 @@
                 </p>
             </div>
 
-            <button id="grantPermissionBtn" class="w-full py-2.5 px-4 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-xs transition-colors shadow-sm flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.99]">
+            <button id="grantPermissionBtn"
+                class="w-full py-2.5 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-xs transition-colors shadow-sm flex items-center justify-center space-x-2 cursor-pointer active:scale-[0.99]">
                 <!-- ShieldCheck Icon -->
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
                 <span>Authorize Microphone</span>
             </button>
         </div>
     </div>
 
-    <!-- Main Minimal Container -->
-    <main class="max-w-2xl w-full flex flex-col space-y-5 my-auto">
-        
-        <!-- Recording, Character Avatar & Visualizer Card -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-shadcn flex flex-col space-y-4">
-            
+    <!-- MAIN CENTERED STUDIO CARD -->
+    <main class="w-full max-w-md sm:max-w-lg lg:max-w-xl mx-auto my-auto flex flex-col space-y-4">
+
+        <!-- Main Card Header & Action Bar -->
+        <div
+            class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 shadow-shadcn flex flex-col space-y-4 relative overflow-hidden">
+
+            <!-- Top Toolbar -->
+            <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+                <div class="flex items-center space-x-2.5">
+                    <div
+                        class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-200 shadow-sm">
+                        <!-- Studio Sparkle / Mic Icon -->
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xs font-semibold tracking-wide text-zinc-100 uppercase">Talking Tom Audio Studio
+                        </h1>
+                        <p id="activePresetBadge" class="text-[10px] text-zinc-400 font-mono">Preset: Tom (+8.0 st)</p>
+                    </div>
+                </div>
+
+                <!-- Sheet Triggers -->
+                <div class="flex items-center space-x-2">
+                    <!-- Open Settings Sheet Button -->
+                    <button id="openSettingsBtn"
+                        class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white border border-zinc-700/50 text-xs font-medium transition-all flex items-center space-x-1.5 cursor-pointer active:scale-95"
+                        title="Voice Settings">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <span class="hidden sm:inline">Effects</span>
+                    </button>
+
+                    <!-- Open History Sheet Button -->
+                    <button id="openHistoryBtn"
+                        class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 text-zinc-300 hover:text-white border border-zinc-700/50 text-xs font-medium transition-all flex items-center space-x-1.5 cursor-pointer active:scale-95 relative"
+                        title="Recording History">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="hidden sm:inline">Clips</span>
+                        <span id="historyBadge"
+                            class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full">0</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- Character Avatar Stage -->
-            <div class="flex flex-col items-center justify-center py-1">
-                <div class="relative w-28 h-28 flex items-center justify-center">
-                    
+            <div class="flex flex-col items-center justify-center py-2">
+                <div class="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center">
+
                     <!-- Listening Animated Outer Rings -->
-                    <div id="listeningWaves" class="absolute inset-0 rounded-full border border-red-500/30 animate-listen-wave hidden pointer-events-none"></div>
-                    <div id="listeningWavesOuter" class="absolute -inset-2 rounded-full border border-red-500/20 animate-listen-wave hidden pointer-events-none" style="animation-delay: 0.3s"></div>
+                    <div id="listeningWaves"
+                        class="absolute inset-0 rounded-full border border-red-500/30 animate-listen-wave hidden pointer-events-none">
+                    </div>
+                    <div id="listeningWavesOuter"
+                        class="absolute -inset-2 rounded-full border border-red-500/20 animate-listen-wave hidden pointer-events-none"
+                        style="animation-delay: 0.3s"></div>
 
                     <!-- Character SVG -->
-                    <svg id="characterSvg" class="w-24 h-24 relative z-10 transition-transform duration-300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="characterSvg"
+                        class="w-24 h-24 sm:w-28 sm:h-28 relative z-10 transition-transform duration-300 drop-shadow-md"
+                        viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Head Base -->
-                        <rect x="15" y="15" width="70" height="70" rx="28" fill="#18181b" stroke="#3f3f46" stroke-width="3"/>
-                        
+                        <rect x="15" y="15" width="70" height="70" rx="28" fill="#18181b" stroke="#3f3f46"
+                            stroke-width="3" />
+
                         <!-- Cat/Tom Ear Left -->
-                        <path d="M 22 20 L 12 4 L 32 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M 22 20 L 12 4 L 32 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5"
+                            stroke-linejoin="round" />
                         <!-- Cat/Tom Ear Right -->
-                        <path d="M 78 20 L 88 4 L 68 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M 78 20 L 88 4 L 68 16 Z" fill="#27272a" stroke="#3f3f46" stroke-width="2.5"
+                            stroke-linejoin="round" />
 
                         <!-- Listening Audio Waves Left (Active on Listen) -->
                         <g id="earWavesLeft" class="opacity-0 transition-opacity duration-200">
-                            <path d="M 5 35 A 15 15 0 0 0 5 65" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
-                            <path d="M 1 28 A 22 22 0 0 0 1 72" stroke="#ef4444" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M 5 35 A 15 15 0 0 0 5 65" stroke="#f87171" stroke-width="2.5"
+                                stroke-linecap="round" />
+                            <path d="M 1 28 A 22 22 0 0 0 1 72" stroke="#ef4444" stroke-width="2" stroke-linecap="round"
+                                opacity="0.6" />
                         </g>
 
                         <!-- Listening Audio Waves Right (Active on Listen) -->
                         <g id="earWavesRight" class="opacity-0 transition-opacity duration-200">
-                            <path d="M 95 35 A 15 15 0 0 1 95 65" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
-                            <path d="M 99 28 A 22 22 0 0 1 99 72" stroke="#ef4444" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M 95 35 A 15 15 0 0 1 95 65" stroke="#f87171" stroke-width="2.5"
+                                stroke-linecap="round" />
+                            <path d="M 99 28 A 22 22 0 0 1 99 72" stroke="#ef4444" stroke-width="2"
+                                stroke-linecap="round" opacity="0.6" />
                         </g>
 
                         <!-- Eye Left Outer -->
-                        <circle cx="36" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+                        <circle cx="36" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2" />
                         <!-- Eye Left Pupil -->
-                        <ellipse id="pupilLeft" cx="36" cy="42" rx="4" ry="4" fill="#f4f4f5" class="transition-all duration-200"/>
+                        <ellipse id="pupilLeft" cx="36" cy="42" rx="4" ry="4" fill="#f4f4f5"
+                            class="transition-all duration-200" />
 
                         <!-- Eye Right Outer -->
-                        <circle cx="64" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+                        <circle cx="64" cy="42" r="9" fill="#09090b" stroke="#52525b" stroke-width="2" />
                         <!-- Eye Right Pupil -->
-                        <ellipse id="pupilRight" cx="64" cy="42" rx="4" ry="4" fill="#f4f4f5" class="transition-all duration-200"/>
+                        <ellipse id="pupilRight" cx="64" cy="42" rx="4" ry="4" fill="#f4f4f5"
+                            class="transition-all duration-200" />
 
                         <!-- Snout/Nose -->
-                        <polygon points="50,51 46,47 54,47" fill="#a1a1aa"/>
+                        <polygon points="50,51 46,47 54,47" fill="#a1a1aa" />
 
                         <!-- Mouth Path (Animated during speaking) -->
-                        <path id="avatarMouth" d="M 40 62 Q 50 64 60 62 Q 50 64 40 62" fill="#ef4444" stroke="#f4f4f5" stroke-width="2" stroke-linejoin="round"/>
+                        <path id="avatarMouth" d="M 40 62 Q 50 64 60 62 Q 50 64 40 62" fill="#ef4444" stroke="#f4f4f5"
+                            stroke-width="2" stroke-linejoin="round" />
 
                         <!-- Cheek Blush Circles -->
-                        <circle cx="26" cy="54" r="3.5" fill="#52525b" opacity="0.4"/>
-                        <circle cx="74" cy="54" r="3.5" fill="#52525b" opacity="0.4"/>
+                        <circle cx="26" cy="54" r="3.5" fill="#52525b" opacity="0.4" />
+                        <circle cx="74" cy="54" r="3.5" fill="#52525b" opacity="0.4" />
                     </svg>
 
                 </div>
@@ -251,79 +352,98 @@
             </div>
 
             <!-- Canvas Visualizer Viewport -->
-            <div class="relative w-full h-28 bg-zinc-950 rounded-lg border border-zinc-800/80 overflow-hidden flex items-center justify-center">
+            <div
+                class="relative w-full h-28 sm:h-32 bg-zinc-950 rounded-xl border border-zinc-800/80 overflow-hidden flex items-center justify-center shadow-inner">
                 <canvas id="visualizerCanvas" class="w-full h-full block cursor-pointer"></canvas>
 
                 <!-- Timer & Mode Overlay -->
-                <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-xs pointer-events-none">
+                <div
+                    class="absolute top-3 left-3 right-3 flex items-center justify-between text-xs pointer-events-none">
                     <div id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400"></div>
                     <div class="flex items-center space-x-2 pointer-events-auto">
-                        <button id="toggleVisModeBtn" class="bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 text-[11px] px-2 py-0.5 rounded font-mono transition-colors">
+                        <button id="toggleVisModeBtn"
+                            class="bg-zinc-900/90 backdrop-blur border border-zinc-800 hover:bg-zinc-800 text-zinc-400 text-[11px] px-2 py-0.5 rounded-md font-mono transition-colors">
                             Bars
                         </button>
-                        <div id="timerDisplay" class="font-mono text-[11px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded">
+                        <div id="timerDisplay"
+                            class="font-mono text-[11px] font-medium text-zinc-400 bg-zinc-900/90 backdrop-blur border border-zinc-800 px-2 py-0.5 rounded-md">
                             00:00.0
                         </div>
                     </div>
                 </div>
 
                 <!-- Idle State Hint -->
-                <div id="visualizerHint" class="absolute pointer-events-none flex flex-col items-center justify-center text-zinc-500 space-y-1.5">
-                    <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+                <div id="visualizerHint"
+                    class="absolute pointer-events-none flex flex-col items-center justify-center text-zinc-500 space-y-1.5">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
                         <!-- Mic Icon -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <p class="text-[11px] font-medium text-zinc-400">Slide to record audio</p>
+                    <p class="text-[11px] font-medium text-zinc-400">Slide below to record voice</p>
                 </div>
             </div>
 
             <!-- Apple-Style Slide-to-Lock Gesture Controls -->
-            <div class="relative flex flex-col items-center justify-center py-2 min-h-[64px] w-full touch-no-select">
-                
+            <div
+                class="relative flex flex-col items-center justify-center pt-1 pb-1 min-h-[64px] w-full touch-no-select">
+
                 <!-- Slide Track -->
-                <div id="appleSlideTrack" class="relative w-full max-w-sm h-14 bg-zinc-950 border border-zinc-800 rounded-full p-1.5 flex items-center shadow-inner overflow-hidden select-none">
-                    
+                <div id="appleSlideTrack"
+                    class="relative w-full max-w-sm h-14 bg-zinc-950 border border-zinc-800 rounded-full p-1.5 flex items-center shadow-inner overflow-hidden select-none">
+
                     <!-- Track Progress Fill -->
-                    <div id="appleTrackProgress" class="absolute left-0 top-0 bottom-0 bg-zinc-800/60 rounded-full w-0 transition-none pointer-events-none"></div>
+                    <div id="appleTrackProgress"
+                        class="absolute left-0 top-0 bottom-0 bg-zinc-800/60 rounded-full w-0 transition-none pointer-events-none">
+                    </div>
 
                     <!-- Slide Shimmer Text -->
-                    <div id="appleSlideText" class="absolute inset-0 flex items-center justify-center text-xs tracking-wider uppercase pointer-events-none pl-6 flex space-x-1">
+                    <div id="appleSlideText"
+                        class="absolute inset-0 flex items-center justify-center text-xs tracking-wider uppercase pointer-events-none pl-6 flex space-x-1">
                         <span class="slide-text-shimmer font-medium">slide to lock recording</span>
                         <!-- ChevronRight Icon -->
-                        <svg class="w-3.5 h-3.5 text-zinc-400 inline-block align-middle ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        <svg class="w-3.5 h-3.5 text-zinc-400 inline-block align-middle ml-1" fill="none"
+                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </div>
 
                     <!-- Slide Thumb -->
-                    <div id="appleSliderThumb" class="relative z-10 w-11 h-11 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 flex items-center justify-center shadow-apple-thumb cursor-grab active:cursor-grabbing transform translate-x-0 transition-none border border-white/40">
+                    <div id="appleSliderThumb"
+                        class="relative z-10 w-11 h-11 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 flex items-center justify-center shadow-apple-thumb cursor-grab active:cursor-grabbing transform translate-x-0 transition-none border border-white/40">
                         <!-- Mic Icon -->
-                        <svg id="thumbMicIcon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg id="thumbMicIcon" class="w-5 h-5 transition-transform duration-200 text-zinc-950"
+                            fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="22" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
 
                 </div>
 
                 <!-- Locked Hands-free Recording Actions -->
-                <div id="lockedControls" class="hidden absolute w-full max-w-sm flex items-center space-x-3 z-30">
-                    <button id="cancelRecordBtn" class="flex-1 bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-red-400 font-medium py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer">
+                <div id="lockedControls" class="hidden absolute w-full max-w-sm flex items-center space-x-3 z-30 px-1">
+                    <button id="cancelRecordBtn"
+                        class="flex-1 bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-red-400 font-medium py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer">
                         <!-- Trash2 Icon -->
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" />
                         </svg>
                         <span>Trash</span>
                     </button>
-                    <button id="stopLockedRecordBtn" class="flex-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer shadow-md">
+                    <button id="stopLockedRecordBtn"
+                        class="flex-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-semibold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all text-xs active:scale-95 cursor-pointer shadow-md">
                         <!-- Square Icon -->
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <rect x="6" y="6" width="12" height="12" rx="2"/>
+                            <rect x="6" y="6" width="12" height="12" rx="2" />
                         </svg>
                         <span>Stop & Mimic</span>
                     </button>
@@ -331,133 +451,244 @@
 
             </div>
 
-        </div>
-
-        <!-- Voice Control Engine -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-shadcn flex flex-col space-y-5">
-            
-            <!-- Voice Presets -->
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                
-                <button data-preset="tom" class="preset-btn p-2 rounded-lg border border-zinc-100 bg-zinc-100 text-zinc-950 font-medium text-xs flex flex-col items-center space-y-1 transition-all text-center cursor-pointer">
-                    <!-- Zap Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                    </svg>
-                    <span>Tom</span>
-                </button>
-
-                <button data-preset="deep" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
-                    <!-- Volume2 Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                    </svg>
-                    <span>Deep</span>
-                </button>
-
-                <button data-preset="robot" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
-                    <!-- Cpu Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <rect x="4" y="4" width="16" height="16" rx="2"/>
-                        <rect x="9" y="9" width="6" height="6"/>
-                        <line x1="9" y1="1" x2="9" y2="4"/>
-                        <line x1="15" y1="1" x2="15" y2="4"/>
-                        <line x1="9" y1="20" x2="9" y2="23"/>
-                        <line x1="15" y1="20" x2="15" y2="23"/>
-                    </svg>
-                    <span>Robot</span>
-                </button>
-
-                <button data-preset="helium" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
-                    <!-- Wind Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
-                        <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
-                        <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
-                    </svg>
-                    <span>Helium</span>
-                </button>
-
-                <button data-preset="echo" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
-                    <!-- Radio Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="2"/>
-                        <path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49"/>
-                    </svg>
-                    <span>Echo</span>
-                </button>
-
-                <button data-preset="natural" class="preset-btn p-2 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
-                    <!-- Mic Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                    </svg>
-                    <span>Natural</span>
-                </button>
-            </div>
-
-            <!-- Range Selectors -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-1">
-                
-                <!-- Pitch -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center text-xs">
-                        <label for="pitchRange" class="font-medium text-zinc-300">Pitch Shift</label>
-                        <span id="pitchValue" class="text-zinc-500 font-mono text-[11px]">+8.0 st</span>
-                    </div>
-                    <input id="pitchRange" type="range" min="-12" max="12" step="0.5" value="8" class="shadcn-slider">
-                </div>
-
-                <!-- Speed -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center text-xs">
-                        <label for="speedRange" class="font-medium text-zinc-300">Speed</label>
-                        <span id="speedValue" class="text-zinc-500 font-mono text-[11px]">1.15x</span>
-                    </div>
-                    <input id="speedRange" type="range" min="0.5" max="2.0" step="0.05" value="1.15" class="shadcn-slider">
-                </div>
-
-                <!-- Echo -->
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center text-xs">
-                        <label for="echoRange" class="font-medium text-zinc-300">Echo Delay</label>
-                        <span id="echoValue" class="text-zinc-500 font-mono text-[11px]">0%</span>
-                    </div>
-                    <input id="echoRange" type="range" min="0" max="80" step="5" value="0" class="shadcn-slider">
-                </div>
-            </div>
-
-            <!-- Replay Action Button -->
-            <div class="flex items-center justify-between pt-3 border-t border-zinc-800">
-                <button id="replayBtn" disabled class="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-zinc-200 transition-colors flex items-center space-x-2 cursor-pointer">
+            <!-- Quick Access Replay Bar -->
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-800/80">
+                <button id="quickReplayBtn" disabled
+                    class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-zinc-200 transition-colors flex items-center space-x-2 cursor-pointer">
                     <!-- RotateCw Icon -->
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
                     </svg>
-                    <span>Replay Last Clip</span>
+                    <span>Replay Voice</span>
                 </button>
-                <span id="replayNotice" class="text-[11px] text-zinc-500 font-mono">No clip stored.</span>
+                <span id="replayNotice" class="text-[11px] text-zinc-500 font-mono">No audio recorded yet</span>
             </div>
 
         </div>
+    </main>
 
-        <!-- Recording Archive -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 shadow-shadcn space-y-3">
-            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-                <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Recording History</h3>
-                <span id="historyCount" class="text-[11px] text-zinc-500 font-mono">0 clips</span>
-            </div>
+    <!-- SETTINGS / VOICE CONTROL SHEET -->
+    <div id="settingsSheet"
+        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="sheet-backdrop absolute inset-0 bg-zinc-950/80 backdrop-blur-sm cursor-pointer"></div>
 
-            <div id="historyList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
-                <div class="text-center py-4 text-zinc-500 text-xs">
-                    Clips recorded will appear here.
+        <!-- Sheet Panel -->
+        <div
+            class="sheet-panel relative w-full sm:max-w-lg bg-zinc-900 border border-zinc-800 rounded-t-2xl sm:rounded-2xl p-5 shadow-sheet transform translate-y-full transition-transform duration-300 ease-out max-h-[85vh] flex flex-col space-y-4 z-10 overflow-hidden">
+
+            <!-- Mobile Pull Drag Handle & Sheet Header -->
+            <div class="flex flex-col space-y-3 pb-2 border-b border-zinc-800">
+                <div class="w-10 h-1 bg-zinc-700/60 rounded-full mx-auto sm:hidden"></div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div
+                            class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-200">
+                            <!-- Sliders Icon -->
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
+                        </div>
+                        <h2 class="text-sm font-semibold text-zinc-100">Voice Control Engine</h2>
+                    </div>
+
+                    <button id="closeSettingsBtn"
+                        class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </div>
 
-    </main>
+            <!-- Voice Controls Content Body -->
+            <div class="space-y-5 overflow-y-auto pr-1">
+
+                <!-- Voice Presets Grid -->
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Voice Character
+                        Presets</label>
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+
+                        <button data-preset="tom"
+                            class="preset-btn p-2 rounded-xl border border-zinc-100 bg-zinc-100 text-zinc-950 font-medium text-xs flex flex-col items-center space-y-1 transition-all text-center cursor-pointer">
+                            <!-- Zap Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                            <span>Tom</span>
+                        </button>
+
+                        <button data-preset="deep"
+                            class="preset-btn p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                            <!-- Volume2 Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            </svg>
+                            <span>Deep</span>
+                        </button>
+
+                        <button data-preset="robot"
+                            class="preset-btn p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                            <!-- Cpu Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <rect x="9" y="9" width="6" height="6" />
+                                <line x1="9" y1="1" x2="9" y2="4" />
+                                <line x1="15" y1="1" x2="15" y2="4" />
+                                <line x1="9" y1="20" x2="9" y2="23" />
+                                <line x1="15" y1="20" x2="15" y2="23" />
+                            </svg>
+                            <span>Robot</span>
+                        </button>
+
+                        <button data-preset="helium"
+                            class="preset-btn p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                            <!-- Wind Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                                <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                                <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+                            </svg>
+                            <span>Helium</span>
+                        </button>
+
+                        <button data-preset="echo"
+                            class="preset-btn p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                            <!-- Radio Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="2" />
+                                <path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49" />
+                            </svg>
+                            <span>Echo</span>
+                        </button>
+
+                        <button data-preset="natural"
+                            class="preset-btn p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-medium text-xs flex flex-col items-center space-y-1 hover:bg-zinc-800/50 transition-all text-center cursor-pointer">
+                            <!-- Mic Icon -->
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            </svg>
+                            <span>Natural</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Range Selectors -->
+                <div class="space-y-4 pt-1">
+
+                    <!-- Pitch -->
+                    <div class="space-y-2 bg-zinc-950 p-3 rounded-xl border border-zinc-800/80">
+                        <div class="flex justify-between items-center text-xs">
+                            <label for="pitchRange" class="font-medium text-zinc-300">Pitch Shift</label>
+                            <span id="pitchValue" class="text-zinc-400 font-mono text-[11px]">+8.0 st</span>
+                        </div>
+                        <input id="pitchRange" type="range" min="-12" max="12" step="0.5" value="8"
+                            class="shadcn-slider">
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="space-y-2 bg-zinc-950 p-3 rounded-xl border border-zinc-800/80">
+                        <div class="flex justify-between items-center text-xs">
+                            <label for="speedRange" class="font-medium text-zinc-300">Playback Speed</label>
+                            <span id="speedValue" class="text-zinc-400 font-mono text-[11px]">1.15x</span>
+                        </div>
+                        <input id="speedRange" type="range" min="0.5" max="2.0" step="0.05" value="1.15"
+                            class="shadcn-slider">
+                    </div>
+
+                    <!-- Echo -->
+                    <div class="space-y-2 bg-zinc-950 p-3 rounded-xl border border-zinc-800/80">
+                        <div class="flex justify-between items-center text-xs">
+                            <label for="echoRange" class="font-medium text-zinc-300">Echo Delay</label>
+                            <span id="echoValue" class="text-zinc-400 font-mono text-[11px]">0%</span>
+                        </div>
+                        <input id="echoRange" type="range" min="0" max="80" step="5" value="0" class="shadcn-slider">
+                    </div>
+                </div>
+
+                <!-- Replay Action inside Sheet -->
+                <button id="sheetReplayBtn" disabled
+                    class="w-full py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-semibold text-zinc-950 transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                    <span>Test Current Settings (Replay)</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- HISTORY / CLIPS ARCHIVE SHEET -->
+    <div id="historySheet"
+        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="sheet-backdrop absolute inset-0 bg-zinc-950/80 backdrop-blur-sm cursor-pointer"></div>
+
+        <!-- Sheet Panel -->
+        <div
+            class="sheet-panel relative w-full sm:max-w-lg bg-zinc-900 border border-zinc-800 rounded-t-2xl sm:rounded-2xl p-5 shadow-sheet transform translate-y-full transition-transform duration-300 ease-out max-h-[85vh] flex flex-col space-y-4 z-10 overflow-hidden">
+
+            <!-- Mobile Pull Drag Handle & Sheet Header -->
+            <div class="flex flex-col space-y-3 pb-2 border-b border-zinc-800">
+                <div class="w-10 h-1 bg-zinc-700/60 rounded-full mx-auto sm:hidden"></div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div
+                            class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-200">
+                            <!-- History Clock Icon -->
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-sm font-semibold text-zinc-100">Recording History</h2>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <span id="historyCount"
+                            class="text-[11px] text-zinc-400 font-mono bg-zinc-950 border border-zinc-800 px-2 py-0.5 rounded-full">0
+                            clips</span>
+                        <button id="closeHistoryBtn"
+                            class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors cursor-pointer">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clips List Container -->
+            <div id="historyList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                <div class="text-center py-8 text-zinc-500 text-xs flex flex-col items-center justify-center space-y-2">
+                    <div
+                        class="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-zinc-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                    <span>No recorded clips yet. Use the slide button on the main studio screen to record!</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <script>
         // Core Web Audio State
@@ -483,6 +714,7 @@
         let recordingHistory = [];
 
         // Audio parameters
+        let currentPresetKey = 'tom';
         let currentPitchShift = 8.0;
         let currentSpeed = 1.15;
         let currentEchoFeedback = 0;
@@ -514,10 +746,14 @@
         const echoValue = document.getElementById('echoValue');
 
         const presetButtons = document.querySelectorAll('.preset-btn');
-        const replayBtn = document.getElementById('replayBtn');
+        const activePresetBadge = document.getElementById('activePresetBadge');
+        const quickReplayBtn = document.getElementById('quickReplayBtn');
+        const sheetReplayBtn = document.getElementById('sheetReplayBtn');
         const replayNotice = document.getElementById('replayNotice');
+
         const historyList = document.getElementById('historyList');
         const historyCount = document.getElementById('historyCount');
+        const historyBadge = document.getElementById('historyBadge');
 
         const canvas = document.getElementById('visualizerCanvas');
         const canvasCtx = canvas.getContext('2d');
@@ -532,6 +768,60 @@
         const pupilLeft = document.getElementById('pupilLeft');
         const pupilRight = document.getElementById('pupilRight');
         const avatarMouth = document.getElementById('avatarMouth');
+
+        // Sheet DOM Elements & Open/Close Handlers
+        const openSettingsBtn = document.getElementById('openSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const settingsSheet = document.getElementById('settingsSheet');
+
+        const openHistoryBtn = document.getElementById('openHistoryBtn');
+        const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+        const historySheet = document.getElementById('historySheet');
+
+        function openSheet(sheetEl) {
+            if (!sheetEl) return;
+            const panel = sheetEl.querySelector('.sheet-panel');
+            sheetEl.classList.remove('opacity-0', 'pointer-events-none');
+            sheetEl.classList.add('opacity-100', 'pointer-events-auto');
+            if (panel) {
+                panel.classList.remove('translate-y-full');
+                panel.classList.add('translate-y-0');
+            }
+        }
+
+        function closeSheet(sheetEl) {
+            if (!sheetEl) return;
+            const panel = sheetEl.querySelector('.sheet-panel');
+            if (panel) {
+                panel.classList.remove('translate-y-0');
+                panel.classList.add('translate-y-full');
+            }
+            setTimeout(() => {
+                sheetEl.classList.remove('opacity-100', 'pointer-events-auto');
+                sheetEl.classList.add('opacity-0', 'pointer-events-none');
+            }, 250);
+        }
+
+        openSettingsBtn.addEventListener('click', () => openSheet(settingsSheet));
+        closeSettingsBtn.addEventListener('click', () => closeSheet(settingsSheet));
+
+        openHistoryBtn.addEventListener('click', () => openSheet(historySheet));
+        closeHistoryBtn.addEventListener('click', () => closeSheet(historySheet));
+
+        // Close on backdrop clicks
+        document.querySelectorAll('.sheet-backdrop').forEach(backdrop => {
+            backdrop.addEventListener('click', (e) => {
+                closeSheet(e.target.closest('#settingsSheet') || e.target.closest('#historySheet'));
+            });
+        });
+
+        // Close on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSheet(settingsSheet);
+                closeSheet(historySheet);
+            }
+        });
 
         function setupCanvasResolution() {
             if (!canvas.parentElement) return;
@@ -645,7 +935,7 @@
             }
 
             if (activeSourceNode) {
-                try { activeSourceNode.stop(); } catch(e){}
+                try { activeSourceNode.stop(); } catch (e) { }
             }
 
             audioChunks = [];
@@ -668,9 +958,10 @@
                 try {
                     lastAudioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
                     const duration = lastAudioBuffer.duration.toFixed(1);
-                    
+
                     replayNotice.innerText = `${duration}s clip ready`;
-                    replayBtn.disabled = false;
+                    quickReplayBtn.disabled = false;
+                    sheetReplayBtn.disabled = false;
 
                     addToHistory(audioBlob, duration);
                     playTransformedAudio();
@@ -731,7 +1022,7 @@
             initAudioContext();
 
             if (activeSourceNode) {
-                try { activeSourceNode.stop(); } catch(e){}
+                try { activeSourceNode.stop(); } catch (e) { }
             }
 
             const source = audioCtx.createBufferSource();
@@ -790,7 +1081,11 @@
             };
         }
 
-        replayBtn.addEventListener('click', playTransformedAudio);
+        quickReplayBtn.addEventListener('click', playTransformedAudio);
+        sheetReplayBtn.addEventListener('click', () => {
+            closeSheet(settingsSheet);
+            playTransformedAudio();
+        });
 
         function setupLiveVisualizer(stream) {
             const liveSource = audioCtx.createMediaStreamSource(stream);
@@ -869,10 +1164,9 @@
 
         // Dynamic Avatar Animation Functions
         function animateCharacterMouth(volume) {
-            // Volume typically ranges from 0 to 255
             const maxMouthOpening = 22;
             const opening = Math.min(maxMouthOpening, Math.max(2, (volume / 255) * maxMouthOpening * 2.5));
-            
+
             // Morph SVG Mouth path
             const mouthD = `M 38 60 Q 50 ${60 + opening} 62 60 Q 50 ${60 + (opening * 0.3)} 38 60`;
             avatarMouth.setAttribute('d', mouthD);
@@ -884,12 +1178,12 @@
 
         // Voice Presets Config
         const presets = {
-            tom: { pitch: 8.0, speed: 1.15, echo: 0, robot: false },
-            deep: { pitch: -7.0, speed: 0.9, echo: 0, robot: false },
-            robot: { pitch: -2.0, speed: 1.0, echo: 10, robot: true },
-            helium: { pitch: 11.0, speed: 1.35, echo: 0, robot: false },
-            echo: { pitch: 2.0, speed: 1.0, echo: 45, robot: false },
-            natural: { pitch: 0.0, speed: 1.0, echo: 0, robot: false }
+            tom: { name: 'Tom', pitch: 8.0, speed: 1.15, echo: 0, robot: false },
+            deep: { name: 'Deep', pitch: -7.0, speed: 0.9, echo: 0, robot: false },
+            robot: { name: 'Robot', pitch: -2.0, speed: 1.0, echo: 10, robot: true },
+            helium: { name: 'Helium', pitch: 11.0, speed: 1.35, echo: 0, robot: false },
+            echo: { name: 'Echo', pitch: 2.0, speed: 1.0, echo: 45, robot: false },
+            natural: { name: 'Natural', pitch: 0.0, speed: 1.0, echo: 0, robot: false }
         };
 
         presetButtons.forEach(btn => {
@@ -897,6 +1191,8 @@
                 const key = btn.getAttribute('data-preset');
                 const cfg = presets[key];
                 if (!cfg) return;
+
+                currentPresetKey = key;
 
                 presetButtons.forEach(b => {
                     b.classList.remove('border-zinc-100', 'bg-zinc-100', 'text-zinc-950');
@@ -939,12 +1235,17 @@
         });
 
         function updateSliderLabels() {
-            pitchValue.innerText = `${currentPitchShift >= 0 ? '+' : ''}${currentPitchShift.toFixed(1)} st`;
+            const pitchStr = `${currentPitchShift >= 0 ? '+' : ''}${currentPitchShift.toFixed(1)} st`;
+            pitchValue.innerText = pitchStr;
             speedValue.innerText = `${currentSpeed.toFixed(2)}x`;
             echoValue.innerText = `${currentEchoFeedback}%`;
+
+            const presetName = presets[currentPresetKey] ? presets[currentPresetKey].name : 'Custom';
+            activePresetBadge.innerText = `Preset: ${presetName} (${pitchStr})`;
         }
 
         function resetPresetButtons() {
+            currentPresetKey = 'custom';
             presetButtons.forEach(b => {
                 b.classList.remove('border-zinc-100', 'bg-zinc-100', 'text-zinc-950');
                 b.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
@@ -960,21 +1261,25 @@
 
         function renderHistoryList() {
             historyCount.innerText = `${recordingHistory.length} clip${recordingHistory.length !== 1 ? 's' : ''}`;
+            historyBadge.innerText = `${recordingHistory.length}`;
+
             if (recordingHistory.length === 0) return;
 
             historyList.innerHTML = recordingHistory.map((clip, index) => `
-                <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 flex items-center justify-between gap-3 text-xs">
-                    <div class="flex items-center space-x-2">
-                        <span class="font-mono text-zinc-500 text-[10px]">#${recordingHistory.length - index}</span>
-                        <span class="font-medium text-zinc-300">Clip (${clip.duration}s)</span>
-                        <span class="text-[10px] text-zinc-500 font-mono">${clip.time}</span>
+                <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 flex items-center justify-between gap-3 text-xs shadow-sm">
+                    <div class="flex items-center space-x-2.5">
+                        <span class="font-mono text-zinc-500 text-[11px] font-bold">#${recordingHistory.length - index}</span>
+                        <div>
+                            <div class="font-medium text-zinc-200">Recording Clip (${clip.duration}s)</div>
+                            <div class="text-[10px] text-zinc-500 font-mono">${clip.time}</div>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-1.5">
-                        <button onclick="playHistoryClip('${clip.url}')" class="px-2 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-[11px] transition-colors cursor-pointer flex items-center space-x-1">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="playHistoryClip('${clip.url}')" class="px-2.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-[11px] transition-colors cursor-pointer flex items-center space-x-1 shadow-sm">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             <span>Play</span>
                         </button>
-                        <a href="${clip.url}" download="talking-tom-clip-${clip.id}.webm" class="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 transition-colors" title="Download">
+                        <a href="${clip.url}" download="talking-tom-clip-${clip.id}.webm" class="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors" title="Download Clip">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
@@ -985,6 +1290,7 @@
         }
 
         async function playHistoryClip(url) {
+            closeSheet(historySheet);
             initAudioContext();
             const resp = await fetch(url);
             const arrayBuffer = await resp.arrayBuffer();
@@ -1060,4 +1366,5 @@
         }
     </script>
 </body>
+
 </html>
