@@ -17,7 +17,7 @@
 
 1. Clone or download the repository:
    ```bash
-   git clone https://github.com/your-username/mimic-studio.git
+   git clone https://github.com/your-username/talking-avatar.git
    ```
 2. Open `index.html` in any modern web browser.
 3. Grant microphone permission and start recording!
