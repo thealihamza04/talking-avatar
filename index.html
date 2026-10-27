@@ -451,17 +451,29 @@
 
             </div>
 
-            <!-- Quick Access Replay Bar -->
-            <div class="flex items-center justify-between pt-2 border-t border-zinc-800/80">
-                <button id="quickReplayBtn" disabled
-                    class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-zinc-200 transition-colors flex items-center space-x-2 cursor-pointer">
-                    <!-- RotateCw Icon -->
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                    </svg>
-                    <span>Replay Voice</span>
-                </button>
+            <!-- Quick Access Actions Bar -->
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-800/80 gap-2 flex-wrap">
+                <div class="flex items-center space-x-2">
+                    <button id="quickReplayBtn" disabled
+                        class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-zinc-200 transition-colors flex items-center space-x-1.5 cursor-pointer"
+                        title="Replay Voice with Effects">
+                        <!-- RotateCw Icon -->
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        <span>Replay Voice</span>
+                    </button>
+                    <button id="quickDownloadBtn" disabled
+                        class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors flex items-center space-x-1.5 cursor-pointer"
+                        title="Download Voice with Tom Effect (.wav)">
+                        <!-- Download Icon -->
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span>Download Voice</span>
+                    </button>
+                </div>
                 <span id="replayNotice" class="text-[11px] text-zinc-500 font-mono">No audio recorded yet</span>
             </div>
 
@@ -618,15 +630,25 @@
                     </div>
                 </div>
 
-                <!-- Replay Action inside Sheet -->
-                <button id="sheetReplayBtn" disabled
-                    class="w-full py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-semibold text-zinc-950 transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                    </svg>
-                    <span>Test Current Settings (Replay)</span>
-                </button>
+                <!-- Actions inside Sheet -->
+                <div class="flex items-center space-x-2">
+                    <button id="sheetReplayBtn" disabled
+                        class="flex-1 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-semibold text-zinc-950 transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        <span>Test Replay</span>
+                    </button>
+                    <button id="sheetDownloadBtn" disabled
+                        class="py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer shadow-sm"
+                        title="Download Voice with Current Effects (.wav)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span>Download</span>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -748,7 +770,9 @@
         const presetButtons = document.querySelectorAll('.preset-btn');
         const activePresetBadge = document.getElementById('activePresetBadge');
         const quickReplayBtn = document.getElementById('quickReplayBtn');
+        const quickDownloadBtn = document.getElementById('quickDownloadBtn');
         const sheetReplayBtn = document.getElementById('sheetReplayBtn');
+        const sheetDownloadBtn = document.getElementById('sheetDownloadBtn');
         const replayNotice = document.getElementById('replayNotice');
 
         const historyList = document.getElementById('historyList');
@@ -961,9 +985,11 @@
 
                     replayNotice.innerText = `${duration}s clip ready`;
                     quickReplayBtn.disabled = false;
+                    quickDownloadBtn.disabled = false;
                     sheetReplayBtn.disabled = false;
+                    sheetDownloadBtn.disabled = false;
 
-                    addToHistory(audioBlob, duration);
+                    addToHistory(lastAudioBuffer);
                     playTransformedAudio();
                 } catch (err) {
                     console.error("Audio Decoding Error:", err);
@@ -1081,11 +1107,165 @@
             };
         }
 
+        // Converts an AudioBuffer into standard 16-bit PCM WAV Blob
+        function audioBufferToWavBlob(buffer) {
+            const numChannels = buffer.numberOfChannels;
+            const sampleRate = buffer.sampleRate;
+            const format = 1; // PCM
+            const bitDepth = 16;
+            const bytesPerSample = bitDepth / 8;
+            const blockAlign = numChannels * bytesPerSample;
+            const numFrames = buffer.length;
+            const dataSize = numFrames * blockAlign;
+            const bufferSize = 44 + dataSize;
+
+            const arrayBuffer = new ArrayBuffer(bufferSize);
+            const view = new DataView(arrayBuffer);
+
+            function writeString(offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+
+            // RIFF chunk descriptor
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(8, 'WAVE');
+
+            // fmt subchunk
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, format, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * blockAlign, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitDepth, true);
+
+            // data subchunk
+            writeString(36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            // PCM samples
+            const channels = [];
+            for (let c = 0; c < numChannels; c++) {
+                channels.push(buffer.getChannelData(c));
+            }
+
+            let offset = 44;
+            for (let i = 0; i < numFrames; i++) {
+                for (let c = 0; c < numChannels; c++) {
+                    let sample = channels[c][i];
+                    sample = Math.max(-1, Math.min(1, sample));
+                    const intSample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
+                    view.setInt16(offset, intSample, true);
+                    offset += 2;
+                }
+            }
+
+            return new Blob([arrayBuffer], { type: 'audio/wav' });
+        }
+
+        // Renders audio buffer through exact pitch, speed, robot, and echo effects offline
+        async function renderAudioWithEffects(audioBuffer, pitchShift, speed, echoFeedback, robot) {
+            const pitchFactor = Math.pow(2, pitchShift / 12);
+            const totalRate = Math.max(0.1, pitchFactor * speed);
+            const renderedDuration = (audioBuffer.duration / totalRate) + (echoFeedback > 0 ? 1.2 : 0.1);
+            const sampleRate = audioBuffer.sampleRate;
+            const length = Math.max(1, Math.ceil(renderedDuration * sampleRate));
+
+            const OfflineCtxClass = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+            const offlineCtx = new OfflineCtxClass(
+                audioBuffer.numberOfChannels,
+                length,
+                sampleRate
+            );
+
+            const source = offlineCtx.createBufferSource();
+            source.buffer = audioBuffer;
+            source.playbackRate.value = totalRate;
+
+            let currentNode = source;
+
+            if (robot) {
+                const osc = offlineCtx.createOscillator();
+                const gain = offlineCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.value = 55;
+
+                const modGain = offlineCtx.createGain();
+                modGain.gain.value = 0.8;
+
+                osc.connect(modGain);
+                currentNode.connect(gain);
+                modGain.connect(gain.gain);
+
+                osc.start(0);
+                currentNode = gain;
+            }
+
+            if (echoFeedback > 0) {
+                const delay = offlineCtx.createDelay();
+                delay.delayTime.value = 0.22;
+
+                const feedback = offlineCtx.createGain();
+                feedback.gain.value = echoFeedback / 100;
+
+                currentNode.connect(delay);
+                delay.connect(feedback);
+                feedback.connect(delay);
+                delay.connect(offlineCtx.destination);
+            }
+
+            currentNode.connect(offlineCtx.destination);
+            source.start(0);
+
+            const renderedBuffer = await offlineCtx.startRendering();
+            return audioBufferToWavBlob(renderedBuffer);
+        }
+
+        async function downloadCurrentTransformedAudio() {
+            if (!lastAudioBuffer) return;
+            initAudioContext();
+
+            const presetName = presets[currentPresetKey] ? presets[currentPresetKey].name : 'Custom';
+
+            if (quickDownloadBtn) quickDownloadBtn.classList.add('opacity-50', 'pointer-events-none');
+            if (sheetDownloadBtn) sheetDownloadBtn.classList.add('opacity-50', 'pointer-events-none');
+
+            try {
+                const wavBlob = await renderAudioWithEffects(
+                    lastAudioBuffer,
+                    currentPitchShift,
+                    currentSpeed,
+                    currentEchoFeedback,
+                    isRobotEffect
+                );
+
+                const url = URL.createObjectURL(wavBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `talking-tom-${presetName.toLowerCase()}-${Date.now()}.wav`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            } catch (err) {
+                console.error("Error generating transformed download:", err);
+            } finally {
+                if (quickDownloadBtn) quickDownloadBtn.classList.remove('opacity-50', 'pointer-events-none');
+                if (sheetDownloadBtn) sheetDownloadBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
         quickReplayBtn.addEventListener('click', playTransformedAudio);
+        quickDownloadBtn.addEventListener('click', downloadCurrentTransformedAudio);
         sheetReplayBtn.addEventListener('click', () => {
             closeSheet(settingsSheet);
             playTransformedAudio();
         });
+        sheetDownloadBtn.addEventListener('click', downloadCurrentTransformedAudio);
 
         function setupLiveVisualizer(stream) {
             const liveSource = audioCtx.createMediaStreamSource(stream);
@@ -1252,34 +1432,71 @@
             });
         }
 
-        function addToHistory(blob, duration) {
-            const url = URL.createObjectURL(blob);
-            const clip = { id: Date.now(), url, duration, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
-            recordingHistory.unshift(clip);
-            renderHistoryList();
+        async function addToHistory(rawBuffer) {
+            const presetName = presets[currentPresetKey] ? presets[currentPresetKey].name : 'Custom';
+            const pitch = currentPitchShift;
+            const speed = currentSpeed;
+            const echo = currentEchoFeedback;
+            const robot = isRobotEffect;
+
+            try {
+                const wavBlob = await renderAudioWithEffects(rawBuffer, pitch, speed, echo, robot);
+                const transformedUrl = URL.createObjectURL(wavBlob);
+                const pitchFactor = Math.pow(2, pitch / 12);
+                const totalRate = Math.max(0.1, pitchFactor * speed);
+                const duration = (rawBuffer.duration / totalRate).toFixed(1);
+
+                const clip = {
+                    id: Date.now(),
+                    presetName,
+                    pitch,
+                    speed,
+                    echo,
+                    robot,
+                    duration,
+                    rawBuffer,
+                    transformedUrl,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                };
+
+                recordingHistory.unshift(clip);
+                renderHistoryList();
+            } catch (err) {
+                console.error("Error adding to history:", err);
+            }
         }
 
         function renderHistoryList() {
             historyCount.innerText = `${recordingHistory.length} clip${recordingHistory.length !== 1 ? 's' : ''}`;
             historyBadge.innerText = `${recordingHistory.length}`;
 
-            if (recordingHistory.length === 0) return;
+            if (recordingHistory.length === 0) {
+                historyList.innerHTML = `
+                    <div class="py-8 text-center text-zinc-500 text-xs">
+                        No audio clips recorded yet. Slide or lock the button below to start talking!
+                    </div>
+                `;
+                return;
+            }
 
             historyList.innerHTML = recordingHistory.map((clip, index) => `
                 <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 flex items-center justify-between gap-3 text-xs shadow-sm">
                     <div class="flex items-center space-x-2.5">
                         <span class="font-mono text-zinc-500 text-[11px] font-bold">#${recordingHistory.length - index}</span>
                         <div>
-                            <div class="font-medium text-zinc-200">Recording Clip (${clip.duration}s)</div>
-                            <div class="text-[10px] text-zinc-500 font-mono">${clip.time}</div>
+                            <div class="font-medium text-zinc-200 flex items-center gap-1.5">
+                                <span>Voice Clip (${clip.duration}s)</span>
+                                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-800 text-emerald-400 border border-zinc-700/50">${clip.presetName}</span>
+                            </div>
+                            <div class="text-[10px] text-zinc-500 font-mono">${clip.time} • Effect applied</div>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button onclick="playHistoryClip('${clip.url}')" class="px-2.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-[11px] transition-colors cursor-pointer flex items-center space-x-1 shadow-sm">
+                        <button onclick="playHistoryClip(${clip.id})" class="px-2.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-medium text-[11px] transition-colors cursor-pointer flex items-center space-x-1 shadow-sm">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             <span>Play</span>
                         </button>
-                        <a href="${clip.url}" download="talking-tom-clip-${clip.id}.webm" class="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors" title="Download Clip">
+                        <a href="${clip.transformedUrl}" download="talking-tom-${clip.presetName.toLowerCase()}-${clip.id}.wav" class="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-emerald-400 hover:text-emerald-300 transition-colors" title="Download Voice with Tom Effect (.wav)">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
@@ -1289,14 +1506,22 @@
             `).join('');
         }
 
-        async function playHistoryClip(url) {
+        window.playHistoryClip = function(id) {
+            const clip = recordingHistory.find(c => c.id === id);
+            if (!clip) return;
             closeSheet(historySheet);
             initAudioContext();
-            const resp = await fetch(url);
-            const arrayBuffer = await resp.arrayBuffer();
-            lastAudioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            lastAudioBuffer = clip.rawBuffer;
+            currentPitchShift = clip.pitch;
+            currentSpeed = clip.speed;
+            currentEchoFeedback = clip.echo;
+            isRobotEffect = clip.robot;
+            pitchRange.value = clip.pitch;
+            speedRange.value = clip.speed;
+            echoRange.value = clip.echo;
+            updateSliderLabels();
             playTransformedAudio();
-        }
+        };
 
         function setStatusState(state) {
             if (state === 'recording') {
